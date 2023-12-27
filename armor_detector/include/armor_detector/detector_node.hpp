@@ -67,12 +67,6 @@ private:
   // Image subscrpition
   rclcpp::Subscription<sensor_msgs::msg::Image>::SharedPtr img_sub_;
 
-  float ROI_OUTPOST_XMIN = 0;
-  float ROI_OUTPOST_YMIN = 0;
-  float ROI_OUTPOST_WIDTH = 0;
-  float ROI_OUTPOST_HEIGHT = 0;
-  void Get_ROI(cv::Mat &output);
-
   // Debug information
   bool debug_;
   std::shared_ptr<rclcpp::ParameterEventHandler> debug_param_sub_;

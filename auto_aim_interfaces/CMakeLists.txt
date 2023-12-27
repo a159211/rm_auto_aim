@@ -22,7 +22,7 @@ rosidl_generate_interfaces(${PROJECT_NAME}
   "msg/TrackerInfo.msg"
   "msg/Outpose.msg"
   "msg/OutposeReceive.msg"
-  "msg/RoiRect.msg"
+  "msg/DebugOutpose.msg"
 
   DEPENDENCIES
     std_msgs

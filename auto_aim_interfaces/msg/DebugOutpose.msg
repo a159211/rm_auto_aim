@@ -1,0 +1,4 @@
+float64 yaw_to_hit_center
+float64 yaw_to_armor
+float64 next_x_tocenter
+

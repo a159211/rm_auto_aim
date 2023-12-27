@@ -95,12 +95,6 @@ ArmorDetectorNode::ArmorDetectorNode(const rclcpp::NodeOptions & options)
 void ArmorDetectorNode::imageCallback(const sensor_msgs::msg::Image::ConstSharedPtr img_msg)
 {
   auto armors = detectArmors(img_msg);
-
-  // ROI_OUTPOST_XMIN = 0;
-  // ROI_OUTPOST_YMIN = 0;
-  // ROI_OUTPOST_WIDTH = 0;
-  // ROI_OUTPOST_HEIGHT = 0;
-
   if (pnp_solver_ != nullptr) {
     armors_msg_.header = armor_marker_.header = text_marker_.header = img_msg->header;
     armors_msg_.armors.clear();
@@ -114,10 +108,6 @@ void ArmorDetectorNode::imageCallback(const sensor_msgs::msg::Image::ConstShared
       cv::Mat rvec, tvec;
       bool success = pnp_solver_->solvePnP(armor, rvec, tvec);
       if (success) {
-        // ROI_OUTPOST_XMIN = armor.left_light.top.x - 50;
-        // ROI_OUTPOST_YMIN = armor.left_light.top.y - 100;
-        // ROI_OUTPOST_WIDTH = (((armor.right_light.top.x-armor.left_light.top.x)+(armor.right_light.bottom.x-armor.left_light.bottom.x))/2) + 100;
-        // ROI_OUTPOST_HEIGHT = (((armor.left_light.bottom.y-armor.left_light.top.y)+(armor.right_light.bottom.y-armor.right_light.top.y))/2) + 175;
 
         // Fill basic info
         armor_msg.type = ARMOR_TYPE_STR[static_cast<int>(armor.type)];
@@ -306,19 +296,6 @@ void ArmorDetectorNode::publishMarkers()
   marker_array_.markers.emplace_back(armor_marker_);
   marker_pub_->publish(marker_array_);
 }
-
-// void ArmorDetectorNode::Get_ROI(cv::Mat &output){
-
-//   if(ROI_OUTPOST_WIDTH!=0 && ROI_OUTPOST_HEIGHT!=0){
-//     cv::Mat mask(output.rows,output.cols,output.type(),cv::Scalar(0,0,0));
-//     cv::rectangle(mask,cv::Rect(ROI_OUTPOST_XMIN,ROI_OUTPOST_YMIN,ROI_OUTPOST_WIDTH,ROI_OUTPOST_HEIGHT),cv::Scalar(255,255,255),-1,8);
-//     cv::Mat ROI_img = output.clone();
-//     cv::Mat temp;
-//     cv::copyTo(ROI_img,temp,mask);
-//     output = temp;
-//   }
-
-// }
 
 }  // namespace rm_auto_aim
 
